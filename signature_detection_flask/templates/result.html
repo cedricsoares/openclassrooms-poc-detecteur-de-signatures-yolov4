@@ -1,0 +1,32 @@
+<!doctype html>
+<title>Results</title>
+<head>
+	<title>Home</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+	<header class="page-header">
+		{% if current_user.is_authenticated %}
+			<a class="left" href="/home">Home</a>
+			<a class="left" href="/about">About</a>
+			<a class="left" href="/stats">Your stats</a>
+			<a class="logout" href="{{ url_for('auth.logout') }}">Log out</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+            <a class="left" href="/about">About</a>
+            <a class="left"href="{{ url_for('auth.login') }}">Log In</a>
+			<a class="left" href="/signup">Sign Up</a>
+        {% endif %}
+	</header>
+	<h2>Results</h2>
+	{% if preds %}
+	<p>Yolo a détécté {{ preds }} signature(s)!</p>
+	{% endif %}
+    <div>
+        <img src="data:image/{{ ext }};charset=utf-8;base64,{{ orig_img }}", class="image_responsive">
+        <img src="data:image/{{ ext }};charset=utf-8;base64,{{ pred_img }}", class="image_responsive">
+    </div>
+    <a class="predict_another" href="/home">Predict another one</a>
+</body>

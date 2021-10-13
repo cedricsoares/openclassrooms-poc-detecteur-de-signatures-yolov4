@@ -1,0 +1,61 @@
+<!doctype html>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+	<header class="page-header">
+        {% if current_user.is_authenticated %}
+			<a class="left" href="/home">Home</a>
+			<a class="left" href="/about">About</a>
+			<a class="left" href="/stats">Your stats</a>
+			<a class="logout" href="{{ url_for('auth.logout') }}">Log out</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+			<a class="left" href="/about">About</a>
+        {% endif %}
+	</header>
+	{% if current_user.is_authenticated %}
+	<h2>Please upload an image</h2>
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+	{% endwith %}
+	<form method="post" action="/home" enctype="multipart/form-data">
+		<div>
+			<label for="file-upload" class="custom-file-upload">
+				<i class="fa fa-cloud-upload"></i> Browse
+			</label>
+			<input id="file-upload" type="file" name="file" autocomplete="off" />
+		</div>
+		<div>
+			<input id="uploadFile" placeholder="No File" disabled="disabled" />
+			<script>
+				document.getElementById("file-upload").onchange = function(){
+					document.getElementById("uploadFile").value = this.value.split("\\").pop();
+				};
+			</script>
+		</div>
+		<input type="submit" value="Submit" />
+	</form>
+	{% endif %}
+	{% if not current_user.is_authenticated %}
+	<div class="global_container">
+		<img src={{url_for('static', filename='welcome_page.jpg')}}>
+		<div class="button_container">
+			<p class="description">Pour utiliser l'application nous vous invitons à vous loguer ou à créer un compte utilisateur</p>
+			<div class="buttons">
+				<button type="button"><a href="{{url_for('auth.login')}}">Login</a></button>
+				<button type="button"><a href="{{url_for('auth.signup')}}">Sign Up</a></button>
+			</div>
+		</div>
+	</div>
+	{% endif %}
+	
+</body>

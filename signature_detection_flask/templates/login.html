@@ -1,0 +1,59 @@
+<!doctype html>
+<title>Ready for prediction</title>
+<head>
+	<title>Home</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/login_signup.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+	<header class="page-header">
+        {% if current_user.is_authenticated %}
+			<a class="left" href="/home">Home</a>
+			<a class="left" href="/about">About</a>
+            <a class="left" href="/stats">Your stats</a>
+            <a class="logout" href="{{ url_for('auth.logout') }}">Log out</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+            <a class="left" href="/home">Home</a>
+            <a class="left" href="/about">About</a>
+			<a class="left" href="/signup">Sign Up</a>
+        {% endif %}
+    </header>
+    <div class="global_container">
+        <img src={{url_for('static', filename='welcome_page.jpg')}}>
+        <div class="column is-4 is-offset-4">
+            <h3 class="title">Login</h3>
+            <div class="box">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="notification is-danger">
+                        {{ message }}
+                    {% endfor %}
+                    </div>
+                {% endif %}
+                {% endwith %}
+                <form method="POST" action="/login">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="email" name="email" placeholder="Your Email" autofocus="">
+                        </div>
+                    </div>
+        
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-large" type="password" name="password" placeholder="Your Password">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            Remember me
+                        </label>
+                    </div>
+                    <button class="button is-block is-info is-large is-fullwidth">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

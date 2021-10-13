@@ -1,0 +1,40 @@
+<!doctype html>
+<head>
+    <title>About</title>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+<body>
+	<header class="page-header">
+        {% if current_user.is_authenticated %}
+            <a class="left" href="/home">Home</a>
+            <a class="left" href="/about">About</a>
+            <a class="left" href="/stats"> Your stats</a>
+            <a class="logout" href="{{ url_for('auth.logout') }}">Log out</a>
+        {% endif %}
+        {% if not current_user.is_authenticated %}
+            <a class="left" href="/home">Home</a>
+            <a class="left"href="{{ url_for('auth.login') }}">Login</a>
+            <a class="left" href="/signup">Sign Up</a>
+        {% endif %}
+	</header>
+    
+    <div class="global_container">
+        <div class="img_container">
+            <img src="https://pjreddie.com/media/image/yologo_2.png">
+        </div>
+        
+        <p class="description">    Dévéloppée au sein d'Orange dans le cadre de la formation "Dévéloppeur Data IA", 
+            l'application permet de détécter les signatures sur les documents buisiness. 
+            Elle utilise l'algorithme <a href="https://arxiv.org/abs/2004.10934">Yolo v4</a> pré-entraîné sur 
+            le jeu de données publique <a href="http://tc11.cvc.uab.es/datasets/Tobacco800_1)">Tobacco-800</a>.</p>
+        
+        <div class="container_autors">
+            <p class="content1"> <a href="https://gitlab.com/shukanat/streamlit_signature_detector" target="_blank" class="white-text">
+                    <i class="fab fa-github-square fa-4x"></i> </a> </p>
+            <p class="content2">Auteurs: Vitali Shchutski & Cédric Soares</p>
+        </div>
+    </div>
+</body>

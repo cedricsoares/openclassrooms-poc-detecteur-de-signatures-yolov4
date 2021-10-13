@@ -1,0 +1,37 @@
+<!doctype html>
+<head>
+	<title>Your stats</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/stats.css') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+<body>
+	<header class="page-header">
+			<a class="left" href="/home">Home</a>
+			<a class="left" href="/about">About</a>
+            <a class="logout" href="{{ url_for('auth.logout') }}">Log out</a>
+    </header>
+    <div class="graph_container">
+        {% if row_data %}
+        <p>
+            Statistics of predictions for {{user}}.
+        </p>
+        <table>
+            <tr>
+                {% for col in column_names %}
+                <th>{{col}}</th>
+                {% endfor %}
+            </tr>
+            {% for row in row_data %}
+            <tr>
+                {% for col, row_ in zip(column_names, row) %}
+                <td>{{row_}}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        {% if not row_data %}
+        <p>You do not have any prediction yet.</p>
+        {% endif %}
+    </div>
+</body>
